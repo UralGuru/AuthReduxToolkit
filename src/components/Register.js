@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { register } from "../slices/auth";
-import { clearMessage } from "../slices/message";
+import { register } from "../slices/authSlice";
+import { clearMessage } from "../slices/messageSlice";
 
 const Register = () => {
     const [successful, setSuccessful] = useState(false);
@@ -17,22 +17,28 @@ const Register = () => {
     }, [dispatch]);
 
     const initialValues = {
-        username: "",
+        name: "",
         email: "",
+        phone: "",
         password: "",
     };
 
     const validationSchema = Yup.object().shape({
-        username: Yup.string()
+        name: Yup.string()
             .test(
                 "len",
-                "The username must be between 3 and 20 characters.",
-                (val) =>
-                    val && val.toString().length >= 3 && val.toString().length <= 20
+                "The username must be between 2 and 20 characters.",
+                (val) => val && val.toString().length >= 2 && val.toString().length <= 20
+            )
+            .required("This field is required!"),
+        phone: Yup.string()
+            .test(
+                "len",
+                "The username must be between 10 and 15 characters.",
+                (val) => val && val.toString().length >= 10 && val.toString().length <= 15
             )
             .required("This field is required!"),
         email: Yup.string()
-            .email("This is not a valid email.")
             .required("This field is required!"),
         password: Yup.string()
             .test(
@@ -45,11 +51,11 @@ const Register = () => {
     });
 
     const handleRegister = (formValue) => {
-        const { username, email, password } = formValue;
+        const { name, phone, email, password } = formValue;
 
         setSuccessful(false);
 
-        dispatch(register({ username, email, password }))
+        dispatch(register({ name, phone, email, password }))
             .unwrap()
             .then(() => {
                 setSuccessful(true);
@@ -77,9 +83,9 @@ const Register = () => {
                             {!successful && (
                                 <div>
                                     <div className="form-group">
-                                        <label htmlFor="username">Username</label>
+                                        <label htmlFor="name">Username</label>
                                         <Field
-                                            name="username"
+                                            name="name"
                                             type="text"
                                             className={
                                                 "form-control" +
@@ -89,7 +95,7 @@ const Register = () => {
                                             }
                                         />
                                         <ErrorMessage
-                                            name="username"
+                                            name="name"
                                             component="div"
                                             className="invalid-feedback"
                                         />
@@ -107,6 +113,23 @@ const Register = () => {
                                         />
                                         <ErrorMessage
                                             name="email"
+                                            component="div"
+                                            className="invalid-feedback"
+                                        />
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label htmlFor="email">Phone</label>
+                                        <Field
+                                            name="phone"
+                                            type="text"
+                                            className={
+                                                "form-control" +
+                                                (errors.phone && touched.phone ? " is-invalid" : "")
+                                            }
+                                        />
+                                        <ErrorMessage
+                                            name="phone"
                                             component="div"
                                             className="invalid-feedback"
                                         />

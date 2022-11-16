@@ -13,7 +13,7 @@ import BoardUser from "./components/BoardUser";
 import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
 
-import { logout } from "./slices/auth";
+import { logout } from "./slices/authSlice";
 
 const App = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -50,21 +50,21 @@ const App = () => {
                 </Link>
               </li>
 
-              {showModeratorBoard && (
-                  <li className="nav-item">
-                    <Link to={"/mod"} className="nav-link">
-                      Moderator Board
-                    </Link>
-                  </li>
-              )}
+              {/*{showModeratorBoard && (*/}
+              {/*    <li className="nav-item">*/}
+              {/*      <Link to={"/mod"} className="nav-link">*/}
+              {/*        Moderator Board*/}
+              {/*      </Link>*/}
+              {/*    </li>*/}
+              {/*)}*/}
 
-              {showAdminBoard && (
-                  <li className="nav-item">
-                    <Link to={"/admin"} className="nav-link">
-                      Admin Board
-                    </Link>
-                  </li>
-              )}
+              {/*{showAdminBoard && (*/}
+              {/*    <li className="nav-item">*/}
+              {/*      <Link to={"/admin"} className="nav-link">*/}
+              {/*        Admin Board*/}
+              {/*      </Link>*/}
+              {/*    </li>*/}
+              {/*)}*/}
 
               {currentUser && (
                   <li className="nav-item">
