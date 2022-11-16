@@ -54,15 +54,33 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {    },
-    extraReducers: {
-        [login.fulfilled]: (state, action) => {
-            state.isLoggedIn = true;
-            state.user = action.payload.user;
-        },
-        [login.rejected]: (state, action) => {
-            state.isLoggedIn = false;
-            state.user = null;
-        },
+    extraReducers: (builder) => {
+        builder
+            .addMatcher(
+                // matcher can be defined inline as a type predicate function
+                (action) => action.type.endsWith('/fulfilled'),
+                (state, action) => {
+                    state.isLoggedIn = true;
+                    state.user = action.payload.user;
+                }
+            )
+            // matcher can just return boolean and the matcher can receive a generic argument
+            .addMatcher(
+                (action) => action.type.endsWith('/rejected'),
+                (state, action) => {
+                    state.isLoggedIn = false;
+                    state.user = null;
+                }
+            )
+        // [login.fulfilled]: (state, action) => {
+        //     state.isLoggedIn = true;
+        //     state.user = action.payload.user;
+        // },
+        // [login.rejected]: (state, action) => {
+        //     state.isLoggedIn = false;
+        //     state.user = null;
+        // },
+
         // [register.fulfilled]: (state, action) => {
         //     state.isLoggedIn = false;
         // },
