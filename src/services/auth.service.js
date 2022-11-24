@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_URL = "http://food-court.tk/api/v1.0/";
-// const API_URL = "https://192.168.0.200:7777/v1.0/";
+// const API_URL = "http://food-court.tk:8080/v1.0/";
 
 const register = (name, phone, email, password) => {
     return axios.post(API_URL + "auth/registration", {
@@ -15,6 +15,7 @@ const register = (name, phone, email, password) => {
 const login = ({email, password}) => {
     return axios
         .post(API_URL + "auth/login", {
+        // .post(API_URL + "auth/account/external-login?provider=Google&backUrl=/home", {
             email,
             password
         })
